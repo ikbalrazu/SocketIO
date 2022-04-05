@@ -1,6 +1,7 @@
 import './App.css';
 import React,{useState,useEffect} from 'react';
 import io from 'socket.io-client';
+import Namespace from '../src/components/Namespace';
 
 
 let socket;
@@ -18,6 +19,10 @@ function App() {
     socket.emit("customEvent",msg);
   }
 
+  const BroadcastingEvent = () => {
+
+  }
+
   useEffect(()=>{
     console.log("hello world")
     socket = io.connect("http://localhost:4000");
@@ -33,6 +38,12 @@ function App() {
       console.log(data);
       document.getElementById("msg1").innerHTML=data;
     })
+
+    //receive broadcast data
+    socket.on("broadcastEvent",function(data){
+      document.getElementById("msg2").innerHTML=data;
+    })
+
 
   },[])
 
@@ -58,6 +69,18 @@ function App() {
       <button onClick={CustomMessageEvent}>custom event send</button>
       </div>
       <h1 id='msg1'></h1>
+      </div>
+
+      <div className='customEvent' style={{border:"1px solid yellow"}}>
+        <h1>Broadcasting</h1>
+      <div>
+      <input id='input' placeholder='message...' onChange={(e)=>setMsg(e.target.value)}/>
+      </div>
+      <h1 id='msg2'></h1>
+      </div>
+
+      <div className='customEvent' style={{border:"1px solid yellow"}}>
+        <Namespace/>
       </div>
       
     </div>

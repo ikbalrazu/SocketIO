@@ -43,11 +43,27 @@ io.on('connection', (socket) => {
         console.log(data);
     })
 
+    //boardcasting from server side
+    io.sockets.emit("broadcastEvent","this is broadcast message");
+
+    
+
     //when user will be disconnected
     socket.on("disconnect", ()=>{
         console.log("user disconnected",socket.id);
     })
 });
+
+//broadcast using namespace
+let namespace1 = io.of("/buy");
+namespace1.on("connection",function(socket){
+    console.log("buy user connected");
+    namespace1.emit("myevent","hello buy");
+})
+let namespace2 = io.of("/sell");
+namespace2.on("connection",function(socket){
+    namespace2.emit("myevent","hello sell");
+})
 
 
 // app.listen(port,function(error){
