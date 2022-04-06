@@ -53,6 +53,11 @@ io.on('connection', (socket) => {
         createdAt: new Date().getTime()
     })
 
+    //join room
+    socket.join("sports");
+    io.sockets.in("sports").emit("sleep","person is spleeping in my bed room");
+    
+
     
 
     //when user will be disconnected

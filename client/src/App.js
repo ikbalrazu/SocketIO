@@ -50,6 +50,11 @@ function App() {
       console.log(message);
     })
 
+    //receive join room data
+    socket.on("sleep",(data)=>{
+      console.log(data);
+    })
+
 
   },[])
 
