@@ -41,7 +41,13 @@ function App() {
 
     //receive broadcast data
     socket.on("broadcastEvent",function(data){
+      console.log("broadcasting message: ",data);
       document.getElementById("msg2").innerHTML=data;
+    })
+
+    //receive another broadcast data 
+    socket.on("mybroadcastevent",(message)=>{
+      console.log(message);
     })
 
 

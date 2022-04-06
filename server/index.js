@@ -46,6 +46,13 @@ io.on('connection', (socket) => {
     //boardcasting from server side
     io.sockets.emit("broadcastEvent","this is broadcast message");
 
+    //usign broadcast event
+    socket.broadcast.emit("mybroadcastevent",{
+        from: "admin",
+        text: "new user joined",
+        createdAt: new Date().getTime()
+    })
+
     
 
     //when user will be disconnected
