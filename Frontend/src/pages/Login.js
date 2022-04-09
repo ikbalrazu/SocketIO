@@ -8,8 +8,8 @@ const Login = () => {
     const paperStyle= {
         padding:20,
         height: '70vh',
-        width: 280,
-        margin: '20px auto'
+        width: 300,
+        margin: '0 auto'
     }
   return (
     <Grid>

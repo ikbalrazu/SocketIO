@@ -7,14 +7,14 @@ import Login from '../pages/Login';
 import SignUp from '../pages/SignUp';
 
 const SignInOutContainer = () => {
-  const [value, setValue] = React.useState(2);
+  const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   const paperStyle = {
-    width:320,
+    width:340,
     margin:"20px auto"
   }
 
@@ -30,7 +30,7 @@ const SignInOutContainer = () => {
         {...other}
       >
         {value === index && (
-          <Box sx={{ p: 3 }}>
+          <Box>
             <Typography>{children}</Typography>
           </Box>
         )}
@@ -41,7 +41,9 @@ const SignInOutContainer = () => {
   return (
       <Paper square style={paperStyle}>
       <Tabs 
-      value={value} 
+      value={value}
+      indicatorColor="primary"
+      textColor='primary' 
       onChange={handleChange} 
       aria-label="disabled tabs example"
       >
