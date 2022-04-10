@@ -3,7 +3,7 @@ import React from 'react';
 import { Grid, Paper, Avatar, Link, TextField, FormGroup, FormControlLabel, Checkbox, Button, Typography } from '@material-ui/core';
 import {Lock} from '@material-ui/icons';
 
-const Login = () => {
+const Login = ({handleChange}) => {
 
     const paperStyle= {
         padding:20,
@@ -39,7 +39,7 @@ const Login = () => {
                 </Link>
             </Typography>
             <Typography>
-                <Link href="#">
+                <Link href="#" onClick={()=>handleChange("event",1)}>
                     Do you have an account ?
                 </Link>
             </Typography>

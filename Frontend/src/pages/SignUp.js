@@ -1,13 +1,18 @@
 
 import React from 'react';
-import { Grid, Paper, Avatar, Link, TextField, FormGroup, FormControlLabel, Checkbox, Button, Typography } from '@material-ui/core';
-import {AddCircleOutline} from '@material-ui/icons';
+import { Grid, Paper, Avatar, Link, TextField, FormGroup, FormControlLabel, Checkbox, Button, Typography, IconButton, Input  } from '@material-ui/core';
+import {AddCircleOutline, PhotoCamera } from '@material-ui/icons';
+import { styled } from '@mui/material/styles';
 
 const SignUp = () => {
 
+    const Input = styled('input')({
+        
+      });
+
     const paperStyle= {
         padding:20,
-        height: '70vh',
+        height: '73vh',
         width: 300,
         margin: '0 auto'
     }
@@ -25,6 +30,14 @@ const SignUp = () => {
             <TextField label="Email" fullWidth required/>
             <TextField label="Password" type='password' fullWidth required style={{marginTop:"10px"}}/>
             <TextField label="Confirm Password" type='password' fullWidth required style={{marginTop:"10px"}}/>
+            <Grid style={{marginTop:"10px"}}>
+            <label htmlFor="icon-button-file">
+                <Input accept="image/*" id="icon-button-file" type="file" />
+                <IconButton color="primary" aria-label="upload picture" >
+                {/* <PhotoCamera /> */}
+                </IconButton>
+            </label>
+            </Grid>
             <FormGroup style={{marginTop:"5px",marginBottom:"5px"}}>
             <FormControlLabel 
             control={
@@ -45,6 +58,7 @@ const SignUp = () => {
                     Do you have an account ?
                 </Link>
             </Typography> */}
+            
             </Grid>
             
         </Paper>
