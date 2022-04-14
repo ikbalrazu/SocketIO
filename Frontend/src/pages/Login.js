@@ -2,6 +2,7 @@
 import React from 'react';
 import { Grid, Paper, Avatar, Link, TextField, FormGroup, FormControlLabel, Checkbox, Button, Typography } from '@material-ui/core';
 import {Lock} from '@material-ui/icons';
+import Chat from './Chat';
 
 const Login = ({handleChange}) => {
 
@@ -32,7 +33,7 @@ const Login = ({handleChange}) => {
             />
             } label="Remember me" />
             </FormGroup>
-            <Button variant="contained" color="primary" fullWidth style={{marginBottom:"15px"}}>Sign In</Button>
+            <Button href='/chat' variant="contained" color="primary" fullWidth style={{marginBottom:"15px"}}>Sign In</Button>
             <Typography>
                 <Link href="#">
                     Forgot Password ?

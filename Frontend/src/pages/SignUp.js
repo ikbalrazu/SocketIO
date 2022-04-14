@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { Grid, Paper, Avatar, Link, TextField, FormGroup, FormControlLabel, Checkbox, Button, Typography, IconButton, Input  } from '@material-ui/core';
+import { Grid, Paper, Avatar, Link, TextField, FormGroup, FormControlLabel, Checkbox, Button, Typography, IconButton  } from '@material-ui/core';
 import {AddCircleOutline, PhotoCamera } from '@material-ui/icons';
-import { styled } from '@mui/material/styles';
+import { styled } from '@material-ui/core/styles';
 
 const SignUp = () => {
 
