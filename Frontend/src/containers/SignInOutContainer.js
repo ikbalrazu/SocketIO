@@ -1,10 +1,10 @@
 
-
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import Paper from '@material-ui/core/Paper';
 import {Tab, Tabs, Box, Typography } from '@material-ui/core';
 import Login from '../pages/Login';
 import SignUp from '../pages/SignUp';
+import {useNavigate} from 'react-router-dom';
 
 const SignInOutContainer = () => {
   const [value, setValue] = React.useState(0);
@@ -37,6 +37,14 @@ const SignInOutContainer = () => {
       </div>
     );
   }
+
+  // const history = useNavigate();
+
+    // useEffect(()=>{
+    //     const user = JSON.parse(localStorage.getItem("userinfo"));
+        
+    //     if (user) history("/chat");
+    // },[history]);
 
   return (
       <Paper square style={paperStyle}>

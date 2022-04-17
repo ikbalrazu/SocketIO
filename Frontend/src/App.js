@@ -6,12 +6,12 @@ import SignInOutContainer from './containers/SignInOutContainer';
 
 function App() {
   return (
-      <BrowserRouter>
+      
       <Routes>
         <Route path='/' element={<SignInOutContainer/>}/>
         <Route path='/chat' element={<Chat/>}/>
       </Routes>
-      </BrowserRouter>
+     
   );
 }
 
