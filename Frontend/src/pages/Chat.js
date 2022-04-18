@@ -1,11 +1,10 @@
 
 import React from 'react';
-import {Container,TextField,Backdrop,Fade,Button,Modal,Box,Paper,Grid, List, ListItemText, ListItem, ListItemAvatar, InputBase, Avatar, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import {Container,Drawer,Badge,TextField,Backdrop,Fade,Button,Modal,Box,Paper,Grid, List, ListItemText, ListItem, ListItemAvatar, InputBase, Avatar, Typography } from '@material-ui/core';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import CreateIcon from '@material-ui/icons/Create';
@@ -13,8 +12,9 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {useNavigate} from 'react-router-dom';
 import { ChatState } from '../Context/ChatProvider';
 import CloseIcon from '@material-ui/icons/Close';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 import SideDrawer from '../components/SideDrawer';
-import { Autocomplete } from '@autocomplete/material-ui';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,6 +58,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const StyledBadge = withStyles((theme) => ({
+  badge: {
+    backgroundColor: '#44b700',
+    color: '#44b700',
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    '&::after': {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      borderRadius: '50%',
+      animation: '$ripple 1.2s infinite ease-in-out',
+      border: '1px solid currentColor',
+      content: '""',
+    },
+  },
+  '@keyframes ripple': {
+    '0%': {
+      transform: 'scale(.8)',
+      opacity: 1,
+    },
+    '100%': {
+      transform: 'scale(2.4)',
+      opacity: 0,
+    },
+  },
+}))(Badge);
+
 
 const Chat = () => {
   const userInfo = JSON.parse(localStorage.getItem("userinfo"));
@@ -96,7 +125,7 @@ const Chat = () => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>{userInfo.name}</MenuItem>
-      <MenuItem onClick={MyAccount}>My account</MenuItem>
+      <MenuItem onClick={MyAccount}>My Profile</MenuItem>
     </Menu>
   );
 
@@ -129,10 +158,21 @@ const Chat = () => {
     navigate("/");
   }
 
+  const [state,setState] = React.useState(false);
+  const toggleDrawer = (open) => (event) =>{
+    setState(open);
+  }
+  const list = () =>{
+    <List>
+      <ListItem>iT WORKS,fgdfgdddgggggggg WELL DONE</ListItem>
+    </List>
+  }
 
   return (
     <>
       {/* {user && <SideDrawer/>} */}
+
+      
       
       {/* modal for My Account */}
       <Modal
@@ -222,6 +262,42 @@ const Chat = () => {
         <Paper elevation={3} style={{padding:"4px"}}>
         <Box >
         <Grid container direction='row' alignItems="center">
+
+        <Grid item style={{position:"relative",float:"right"}}>
+        {/* <InputBase
+        className={classes.input}
+        placeholder="Search"
+        inputProps={{ 'aria-label': 'search google maps' }}
+        /> */}
+        <IconButton type="submit" onClick={toggleDrawer(true)} className={classes.iconButton} aria-label="search">
+        <SearchIcon />
+        <Typography>
+          Search
+        </Typography>
+        </IconButton>
+        <Drawer
+        anchor={'left'}
+        open={state}
+        onClose={toggleDrawer(false)}
+      >
+        {list}
+      </Drawer>
+        </Grid>
+        
+        <Divider className={classes.divider} orientation="vertical" />
+        <IconButton color="primary" className={classes.iconButton} aria-label="directions" onClick={logoutHandler}>
+        <ExitToAppIcon />
+        </IconButton>
+
+          
+          <Grid item>
+          <IconButton aria-label="show 17 new notifications" color="inherit">
+              <Badge badgeContent={1} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+          </Grid>
+
         <Grid item xl={1}>
         <IconButton
               edge="end"
@@ -231,24 +307,24 @@ const Chat = () => {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle src={userInfo.picture}/>
+              {/* <AccountCircle src={userInfo.picture}/> */}
+              <StyledBadge
+              overlap="circular"
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              variant="dot"
+            >
+              <Avatar alt="Remy Sharp" style={{height:"30px",width:"30px"}} src={userInfo.picture} />
+            </StyledBadge>
             </IconButton>
             {renderMenu}
         </Grid>
-        <Grid item>
-        <InputBase
-        className={classes.input}
-        placeholder="Search"
-        inputProps={{ 'aria-label': 'search google maps' }}
-        />
-        <IconButton type="submit" className={classes.iconButton} aria-label="search">
-        <SearchIcon />
-        </IconButton>
-        </Grid>
-        <Divider className={classes.divider} orientation="vertical" />
-        <IconButton color="primary" className={classes.iconButton} aria-label="directions" onClick={logoutHandler}>
-        <ExitToAppIcon />
-        </IconButton>
+       
+        
+        
+        
         </Grid>
         </Box>
         </Paper>
