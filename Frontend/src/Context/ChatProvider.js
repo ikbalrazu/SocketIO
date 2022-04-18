@@ -8,16 +8,16 @@ const ChatProvider = ({children}) =>{
 
     const [user,setUser] = useState()
 
-    //const navigate = useNavigate();
+    //const history = useNavigate();
 
-    // useEffect(()=>{
-    //     const userInfo = JSON.parse(localStorage.getItem("userinfo"));
-    //     setUser(userInfo); 
+    useEffect(()=>{
+        const userInfo = JSON.parse(localStorage.getItem("userinfo"));
+        setUser(userInfo); 
 
-    //     if(!userInfo){
-    //         navigate("/");
-    //     }
-    // },[navigate]);
+        // if(!userInfo){
+        //     history.push("/");
+        // }
+    },[]);
 
     return(
         <ChatContext.Provider value={{ user, setUser }}>

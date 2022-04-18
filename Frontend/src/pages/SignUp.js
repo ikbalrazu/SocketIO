@@ -1,13 +1,12 @@
 
 import React,{useState} from 'react';
 import { Grid, Paper, Avatar, Link, TextField, FormGroup, FormControlLabel, Checkbox, Button, Typography, IconButton  } from '@material-ui/core';
-import {AddCircleOutline, PhotoCamera } from '@material-ui/icons';
+import {AddCircleOutline } from '@material-ui/icons';
 import { styled } from '@material-ui/core/styles';
-import Alert from '@material-ui/lab/Alert';
+// import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
-
 
 const SignUp = () => {
     
@@ -40,9 +39,9 @@ const SignUp = () => {
     const postDetails = (picture) =>{
         // setLoading(true);
         // setBtndisable(true);
-        if(picture === undefined){
-            return <Alert severity="info">This is an info alert — check it out!</Alert>
-        }
+        // if(picture === undefined){
+        //     return <Alert severity="info">This is an info alert — check it out!</Alert>
+        // }
 
         if(picture.type === "image/jpeg" || picture.type === "image/png"){
             const data = new FormData();
@@ -141,7 +140,7 @@ const SignUp = () => {
             </Grid>
             
         </Paper>
-        <Alert severity="warning">{alert}</Alert>
+        {/* <Alert severity="warning">{alert}</Alert> */}
     </Grid>
   )
 }

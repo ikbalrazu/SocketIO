@@ -11,6 +11,10 @@ import Menu from '@material-ui/core/Menu';
 import CreateIcon from '@material-ui/icons/Create';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {useNavigate} from 'react-router-dom';
+import { ChatState } from '../Context/ChatProvider';
+import CloseIcon from '@material-ui/icons/Close';
+import SideDrawer from '../components/SideDrawer';
+import { Autocomplete } from '@autocomplete/material-ui';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,10 +44,24 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  Accountmodal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  Accountpaper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid white',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    height:"auto",
+  },
 }));
+
 
 const Chat = () => {
   const userInfo = JSON.parse(localStorage.getItem("userinfo"));
+  const {user} = ChatState();
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -54,6 +72,18 @@ const Chat = () => {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
+  const [openAccount, setOpenAccount] = React.useState(false);
+
+  const MyAccount = () => {
+    handleMenuClose();
+    setOpenAccount(true);
+  };
+
+  const handleClose2 = () => {
+    setOpenAccount(false);
+  };
+  
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -66,7 +96,7 @@ const Chat = () => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>{userInfo.name}</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={MyAccount}>My account</MenuItem>
     </Menu>
   );
 
@@ -99,11 +129,66 @@ const Chat = () => {
     navigate("/");
   }
 
-  
-  console.log(userInfo);
 
   return (
     <>
+      {/* {user && <SideDrawer/>} */}
+      
+      {/* modal for My Account */}
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.Accountmodal}
+        open={openAccount}
+        onClose={handleClose2}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={openAccount}>
+          <div className={classes.Accountpaper}>
+            <Grid container alignContent='center' direction='column' spacing={1}>
+              
+              <Grid item>
+              <div style={{position:"relative",float:"right"}}>
+              <IconButton
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleClose2}
+              color="inherit"
+              >
+              <CloseIcon/>
+              </IconButton>
+              </div>
+              </Grid>
+
+              <Grid item style={{border:"2px solid white"}}>
+              <Avatar src={userInfo.picture} style={{height:"220px",width:"220px"}}/>
+              </Grid>
+              
+              <Grid item>
+                <Typography>
+                  {userInfo.name}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography>
+                  {userInfo.email}
+                </Typography>
+              </Grid>
+            
+            </Grid>
+            
+          
+          </div>
+        </Fade>
+      </Modal>
+
+      {/* modal for rename group */}
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -132,6 +217,7 @@ const Chat = () => {
           </div>
         </Fade>
       </Modal>
+
       <Container maxWidth="xl" style={{margin:"5px"}}>
         <Paper elevation={3} style={{padding:"4px"}}>
         <Box >
@@ -145,7 +231,7 @@ const Chat = () => {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              <AccountCircle src={userInfo.picture}/>
             </IconButton>
             {renderMenu}
         </Grid>
@@ -195,7 +281,7 @@ const Chat = () => {
           return(
             <ListItem button onClick={()=>console.log("clicked")}>
             <ListItemAvatar>
-              <Avatar/>
+              <Avatar src={userInfo.picture}/>
             </ListItemAvatar>
             <ListItemText primary={data.name}/>
             </ListItem>
