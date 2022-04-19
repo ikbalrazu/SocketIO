@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, {useState} from 'react';
 import {Container,Drawer,Badge,TextField,Backdrop,Fade,Button,Modal,Box,Paper,Grid, List, ListItemText, ListItem, ListItemAvatar, InputBase, Avatar, Typography } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
@@ -15,6 +15,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import SideDrawer from '../components/SideDrawer';
+import axios from 'axios';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -102,10 +103,11 @@ const top100Films = [
 
 const Chat = () => {
   const userInfo = JSON.parse(localStorage.getItem("userinfo"));
-  const {user} = ChatState();
-
+  const {user,chats,setChats,notification,setNotification,setSelectedChat} = ChatState();
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
   const isMenuOpen = Boolean(anchorEl);
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -114,7 +116,7 @@ const Chat = () => {
     setAnchorEl(null);
   };
 
-  const [openAccount, setOpenAccount] = React.useState(false);
+  const [openAccount, setOpenAccount] = useState(false);
 
   const MyAccount = () => {
     handleMenuClose();
@@ -181,7 +183,27 @@ const Chat = () => {
     </List>
   }
 
-  
+  const handleSearch = async () => {
+    if(!search){
+      console.log("plz enter something in search");
+    }
+
+    try{
+
+      const confiq = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const {data} = await axios.get(`http://localhost:4000/api/user?search=${search}`,confiq);
+      setSearchResult(data);
+
+    }catch(error){
+      console.log(error);
+    }
+  }
+
 
   return (
     <>
@@ -290,6 +312,7 @@ const Chat = () => {
           Search
         </Typography>
         </IconButton>
+
         <Drawer
         anchor={'left'}
         open={state}
@@ -302,14 +325,17 @@ const Chat = () => {
           freeSolo
           id="free-solo-2-demo"
           disableClearable
-          options={top100Films.map((option) => option.title)}
+          options={searchResult?.map((user) => user.name)}
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Search input"
+              label="Search by name or email"
               margin="normal"
               variant="outlined"
+              value={search}
               InputProps={{ ...params.InputProps, type: 'search' }}
+              onClick={handleSearch}
+              onChange={(e)=>setSearch(e.target.value)}
             />
           )}
           />
@@ -317,6 +343,7 @@ const Chat = () => {
           </ListItem>
         </List>
         </Drawer>
+
         </Grid>
         
         <Divider className={classes.divider} orientation="vertical" />
