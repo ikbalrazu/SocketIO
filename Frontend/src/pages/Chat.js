@@ -13,6 +13,7 @@ import {useNavigate} from 'react-router-dom';
 import { ChatState } from '../Context/ChatProvider';
 import CloseIcon from '@material-ui/icons/Close';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import SideDrawer from '../components/SideDrawer';
 
 
@@ -56,6 +57,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
     height:"auto",
   },
+  drawer:{
+    width: 250,
+  },
 }));
 
 const StyledBadge = withStyles((theme) => ({
@@ -86,6 +90,14 @@ const StyledBadge = withStyles((theme) => ({
     },
   },
 }))(Badge);
+
+//search autocomplete
+const top100Films = [
+  { title: 'The Shawshank Redemption', year: 1994 },
+  { title: 'The Godfather', year: 1972 },
+  { title: 'The Godfather: Part II', year: 1974 },
+  { title: 'The Dark Knight', year: 2008 }
+];
 
 
 const Chat = () => {
@@ -162,11 +174,14 @@ const Chat = () => {
   const toggleDrawer = (open) => (event) =>{
     setState(open);
   }
+
   const list = () =>{
-    <List>
+    <List className={classes.drawer}>
       <ListItem>iT WORKS,fgdfgdddgggggggg WELL DONE</ListItem>
     </List>
   }
+
+  
 
   return (
     <>
@@ -279,9 +294,29 @@ const Chat = () => {
         anchor={'left'}
         open={state}
         onClose={toggleDrawer(false)}
-      >
-        {list}
-      </Drawer>
+        >
+        <List className={classes.drawer}>
+          <ListItem button>
+          <div style={{ width: 300 }}>
+          <Autocomplete
+          freeSolo
+          id="free-solo-2-demo"
+          disableClearable
+          options={top100Films.map((option) => option.title)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Search input"
+              margin="normal"
+              variant="outlined"
+              InputProps={{ ...params.InputProps, type: 'search' }}
+            />
+          )}
+          />
+          </div>
+          </ListItem>
+        </List>
+        </Drawer>
         </Grid>
         
         <Divider className={classes.divider} orientation="vertical" />
