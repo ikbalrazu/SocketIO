@@ -2,7 +2,7 @@
 import React,{useState} from 'react';
 import { Grid, Paper, Avatar, Link, TextField, FormGroup, FormControlLabel, Checkbox, Button, Typography } from '@material-ui/core';
 import {Lock} from '@material-ui/icons';
-import Chat from './Chat';
+import ChatPage from './ChatPage';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 

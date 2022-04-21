@@ -1,7 +1,7 @@
 import './App.css';
 import {BrowserRouter,Route,Routes} from 'react-router-dom';
 import Homepage from './pages/Homepage';
-import Chat from './pages/Chat';
+import ChatPage from './pages/ChatPage';
 import SignInOutContainer from './containers/SignInOutContainer';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path='/' element={<SignInOutContainer/>}/>
-        <Route path='/chat' element={<Chat/>}/>
+        <Route path='/chat' element={<ChatPage/>}/>
       </Routes>
     </div>
   );

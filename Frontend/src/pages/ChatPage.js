@@ -16,6 +16,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import SideDrawer from '../components/SideDrawer';
 import axios from 'axios';
+import ChatBox from '../components/ChatBox';
+import MyChats from '../components/MyChats';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -101,7 +103,7 @@ const top100Films = [
 ];
 
 
-const Chat = () => {
+const ChatPage = () => {
   const userInfo = JSON.parse(localStorage.getItem("userinfo"));
   const {user,chats,setChats,notification,setNotification,setSelectedChat} = ChatState();
   const classes = useStyles();
@@ -117,6 +119,7 @@ const Chat = () => {
   };
 
   const [openAccount, setOpenAccount] = useState(false);
+  const [fetchAgain, setFetchAgain] = useState(false);
 
   const MyAccount = () => {
     handleMenuClose();
@@ -198,6 +201,27 @@ const Chat = () => {
 
       const {data} = await axios.get(`http://localhost:4000/api/user?search=${search}`,confiq);
       setSearchResult(data);
+
+    }catch(error){
+      console.log(error);
+    }
+  }
+
+  const accessChat = async (userId) => {
+    try{
+
+      const confiq ={
+        "Content-type":"application/json",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+      const {data} = await axios.post("http://localhost:4000/api/chat",{userId},confiq);
+      
+      if(!chats.find((c)=>c._id === data._id)) setChats([data,...chats]);
+
+      setSelectedChat(data);
+      setOpen(false);
 
     }catch(error){
       console.log(error);
@@ -432,7 +456,10 @@ const Chat = () => {
       </Grid>
 
       <Grid item xl={6} lg={8} md={6} sm={6} xs={6} style={{height:"80vh",margin:"0px"}}>
-      <h1>Box</h1>
+      {user && <MyChats fetchAgain={fetchAgain}/>}
+      {user && (
+        <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain}/>
+      )}
       </Grid>
       </Grid>
       </Container>
@@ -440,4 +467,4 @@ const Chat = () => {
   )
 }
 
-export default Chat
+export default ChatPage
