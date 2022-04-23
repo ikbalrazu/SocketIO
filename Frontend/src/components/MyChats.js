@@ -25,10 +25,10 @@ const MyChats = ({ fetchAgain }) =>{
             console.log(error);
         }
     }
-    useEffect(()=>{
-        setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
-        fetchChats();
-    },[])
+    // useEffect(()=>{
+    //     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
+    //     fetchChats();
+    // },[])
     return(
         <>
         </>

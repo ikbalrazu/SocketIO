@@ -1,5 +1,5 @@
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Container,Drawer,Badge,TextField,Backdrop,Fade,Button,Modal,Box,Paper,Grid, List, ListItemText, ListItem, ListItemAvatar, InputBase, Avatar, Typography } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
@@ -208,6 +208,7 @@ const ChatPage = () => {
   }
 
   const accessChat = async (userId) => {
+    console.log(userId);
     try{
 
       const confiq ={
@@ -221,12 +222,17 @@ const ChatPage = () => {
       if(!chats.find((c)=>c._id === data._id)) setChats([data,...chats]);
 
       setSelectedChat(data);
+      console.log(data);
       setOpen(false);
-
+      handleClose();
     }catch(error){
       console.log(error);
     }
   }
+
+  // useEffect(()=>{
+  //   handleSearch();
+  // },[]);
 
 
   return (
@@ -343,25 +349,37 @@ const ChatPage = () => {
         onClose={toggleDrawer(false)}
         >
         <List className={classes.drawer}>
-          <ListItem button>
+          <ListItem>
           <div style={{ width: 300 }}>
           <Autocomplete
           freeSolo
           id="free-solo-2-demo"
           disableClearable
-          options={searchResult?.map((user) => user.name)}
+          options={searchResult}
+          // options={searchResult?.map((user) => user.name)}
+          getOptionLabel={(option) => `${option.name}`}
           renderInput={(params) => (
             <TextField
               {...params}
               label="Search by name or email"
               margin="normal"
               variant="outlined"
-              value={search}
+              // value={search}
               InputProps={{ ...params.InputProps, type: 'search' }}
               onClick={handleSearch}
-              onChange={(e)=>setSearch(e.target.value)}
+              // onChange={(e)=>setSearch(e.target.value)}
             />
           )}
+          renderOption={(option) => {
+            return (
+              <div style={{border:"2px solid AliceBlue",width:"100%",height:"10%",padding:"0px"}}>
+                <div style={{display:"flex",gap:"5px",padding:"2px"}}>
+                <Avatar alt="Remy Sharp" style={{height:"30px",width:"30px"}} src={option.picture} />
+                {option.name}
+                </div>
+              </div>
+            );
+          }}
           />
           </div>
           </ListItem>
