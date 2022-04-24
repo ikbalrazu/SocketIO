@@ -14,10 +14,7 @@ const Homepage = () =>{
 
 
     useEffect(()=>{
-
         fetchChat();
-
-
     },[])
 
     return(

@@ -18,17 +18,17 @@ const MyChats = ({ fetchAgain }) =>{
                 },
             };
         
-            const { data } = await axios.get("/api/chat", config);
+            const { data } = await axios.get("http://localhost:4000/api/chat", config);
             setChats(data);
 
         }catch(error){
             console.log(error);
         }
     }
-    // useEffect(()=>{
-    //     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
-    //     fetchChats();
-    // },[])
+    useEffect(()=>{
+        setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
+        fetchChats();
+    },[])
     return(
         <>
         </>

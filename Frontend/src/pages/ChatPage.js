@@ -211,20 +211,18 @@ const ChatPage = () => {
     console.log(userId);
     try{
 
-      const confiq ={
-        "Content-type":"application/json",
+      const config = {
         headers: {
+          "Content-type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
-      }
-      const {data} = await axios.post("http://localhost:4000/api/chat",{userId},confiq);
-      
-      if(!chats.find((c)=>c._id === data._id)) setChats([data,...chats]);
+      };
+      const { data } = await axios.post(`http://localhost:4000/api/chat`, { userId }, config);
 
+      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
-      console.log(data);
       setOpen(false);
-      handleClose();
+      console.log(data);
     }catch(error){
       console.log(error);
     }
@@ -373,7 +371,7 @@ const ChatPage = () => {
           renderOption={(option) => {
             return (
               <div style={{border:"2px solid AliceBlue",width:"100%",height:"10%",padding:"0px"}}>
-                <div style={{display:"flex",gap:"5px",padding:"2px"}}>
+                <div onClick={()=>accessChat(option._id)} style={{display:"flex",gap:"5px",padding:"2px"}}>
                 <Avatar alt="Remy Sharp" style={{height:"30px",width:"30px"}} src={option.picture} />
                 {option.name}
                 </div>
